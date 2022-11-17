@@ -133,7 +133,7 @@ public class OrderDTO implements Serializable {
     }
 
     public String getPaypalTotal() {
-        return String.format("%.2f", total);
+        return String.format("%.2f", total/24805);
     }
 
     public OrderDTO(int orderId, String receiverName, String address, String phone, Timestamp orderTime, float total, String username, String staffName, String status) {

@@ -16,6 +16,8 @@ public class AppConstants {
     public class SearchBookFeatures {
 
         public static final String SEARCH_PAGE = "searchPage";
+                public static final String SEARCH_PAGE_ADMIN = "updateBookPricePage";
+
     }
 
     public class ViewBookDetailFeature {
@@ -44,7 +46,7 @@ public class AppConstants {
         public static final String HOME_PAGE = "homePage";
         public static final String SALE_STAFF_PAGE = "salePage";
         public static final String INVENTORY_STAFF_PAGE = "InventoryBookAction";
-        public static final String MANAGER_PAGE = "managerPage";
+        public static final String MANAGER_PAGE = "adminDashboardAction";
         public static final String START_SALE_STAFF = "viewAllOrderAction";
 
     }
@@ -56,6 +58,7 @@ public class AppConstants {
         public static final int INVENTORY_STAFF = 3;
         public static final int CUSTOMER = 4;
         // public static final int GUEST = 5;
+         public static final int CREATOR = 6;
 
     }
 
@@ -63,6 +66,7 @@ public class AppConstants {
 
         public static final String HOME_PAGE = "homePage";
         public static final String START_APP_CONTROLLER = "./";
+        public static final String ADMIN_LOGIN_PAGE = "./admin/";
 
     }
 
@@ -182,6 +186,7 @@ public class AppConstants {
         public static final String VIEW_ORDERS_PAGE = "viewOrdersPage";
         public static final String VIEW_ORDER_DETAIL_CONTROLLER = "viewOrderDetailAction";
         public static final String VIEW_ORDER_DETAIL_PAGE = "orderDetailPage";
+        public static final String VIEW_TO_CONFIRM_ORDERS_CONTROLLER = "viewToConfirmOrderAction";
     }
 
     public class ToShipOrderFeatures {
@@ -190,12 +195,14 @@ public class AppConstants {
         public static final String VIEW_ORDER_DETAIL_CONTROLLER = "viewOrderDetailAction";
         public static final String TO_SHIP_ORDER_CONTROLLER = "ToShipOrderAction";
         public static final String VIEW_ORDER_DETAIL_PAGE = "viewOrderDetailPage";
+        public static final String VIEW_TO_SHIP_ORDERS_CONTROLLER = "viewToShipOrderAction";
     }
 
     public class ToReceiveOrderFeatures {
 
         public static final String VIEW_ORDERS_PAGE = "viewOrdersPage";
         public static final String VIEW_ORDER_DETAIL_CONTROLLER = "viewOrderDetailAction";
+        public static final String VIEW_TO_RECEIVE_ORDERS_CONTROLLER = "viewToReceiveOrderAction";
     }
 
     public class ViewCancelOrderFeature {
@@ -210,7 +217,7 @@ public class AppConstants {
 
     public class ReturnAndReFundFeatures {
 
-        public static final String RETURN_AND_REFUND_ORDER_PAGE = "cancelledOrderPage";
+        public static final String RETURN_AND_REFUND_ORDER_PAGE = "returnAndRefundOrderPage";
     }
 
     public class ManageBookFeatures {
@@ -236,6 +243,8 @@ public class AppConstants {
         public static final String VIEW_BLOG_CONTROLLER = "viewBlogAction";
         public static final String MANAGE_BLOGS_PAGE = "manageBlogsPage";
         public static final String VIEW_BLOGS_CONTROLLER = "viewBlogsAction";
+        public static final String CREATE_BLOG_PAGE = "createBlogPage";
+        public static final String VIEW_BLOG_LIST_PAGE = "viewBlogListPage";
     }
 
     public class ManageStaffFeatures {

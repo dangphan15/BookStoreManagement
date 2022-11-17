@@ -77,7 +77,7 @@
                         <span class="label">Total: </span>
                     </div>
                     <div class="col-md-7">
-                        <span>${TRANSACTION.amount.total} VND</span>
+                        <span>${TRANSACTION.amount.total} USD</span>
                     </div>
                 </div>    
                 <div class="row mb-3">

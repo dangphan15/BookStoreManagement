@@ -102,11 +102,15 @@ public class SearchBookController extends HttpServlet {
                     passSearchCondition = false;
                 }
                 if (searchValue != null) {
+                    searchValue = searchValue.trim();
+                    searchValue = searchValue.replace("<", "&lt;");
+                    searchValue = searchValue.replace(">", "&gt;");
+                    System.out.println(searchValue);
                     if (!dto.getName().toLowerCase().contains(searchValue.toLowerCase())) {
                         passSearchCondition = false;
                     }
                 }
-                
+
                 if (genres != null) {
                     for (String s : genres) {
                         genreList.put(s, true);
@@ -194,7 +198,7 @@ public class SearchBookController extends HttpServlet {
                 page = numPage;
             }
             filteredList = filteredList.subList(itemPerPage * (page - 1), Math.min(itemPerPage * (page - 1) + itemPerPage, len));
-          
+
             request.setAttribute("BOOK_LIST", filteredList);
             request.setAttribute("PAGE", page);
             request.setAttribute("NUM_OF_PAGE", numPage);

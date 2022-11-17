@@ -65,7 +65,7 @@
                     margin-bottom: 50px;
                 }
                 .update-pass  a{
-                    text-decoration: none;
+                    text-decoration: underline;
                     color: black;
                 }
                 .update-pass  a:hover{
@@ -164,18 +164,19 @@
                             <div class="col-md-10 update-pass">
                                 <a href="updatePasswordPage">Change your password</a>
                             </div>
+                            <div class="update-message">${requestScope.MESSAGE}</div>
                         </div>
                     </div>
                     <input type="submit" value="Update" class="update-button" />
                 </div>
-
+                            
             </div>
 
 
 
 
         </div>
-        <div class="update-message">${requestScope.MESSAGE}</div>
+        
     </form>
     <%@include file="footer.html" %>
     <jsp:include page="include/include_footer.jsp"></jsp:include>

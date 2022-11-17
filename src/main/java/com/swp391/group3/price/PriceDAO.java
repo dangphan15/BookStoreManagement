@@ -11,6 +11,40 @@ import javax.naming.NamingException;
 
 public class PriceDAO implements Serializable {
 
+    public void changePriceOfBook(PriceDTO priceDto) throws SQLException, ClassNotFoundException, NamingException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            connection = DBHelper.makeConnection();
+            connection.setAutoCommit(false);
+            //Update status of other prices before insert new one
+            String sqlUpdate = "UPDATE prices SET [status] = 'Inactive' WHERE ISBN = ?";
+            stm = connection.prepareStatement(sqlUpdate);
+            stm.setString(1, priceDto.getIsbn());
+            stm.executeUpdate();
+            //insert new price
+            String sqlInsert = "INSERT INTO prices(ISBN, price, applicable_date, [status]) VALUES(?,?,?,?)";
+            stm = connection.prepareStatement(sqlInsert);
+            stm.setString(1, priceDto.getIsbn());
+            stm.setFloat(2, priceDto.getPrice());
+            stm.setTimestamp(3, priceDto.getApplicableDate());
+            stm.setString(4, priceDto.getStatus());
+            stm.executeUpdate();
+            connection.commit();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
     public float getStartingPriceOfBook(String isbn)
             throws ClassNotFoundException, SQLException, NamingException {
         float result = -1;

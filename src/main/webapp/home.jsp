@@ -199,6 +199,32 @@
         .carousel-control-next.item-control-next {
             justify-content: end;
         }
+        .rating-stars:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: #ccc;
+        }
+
+        .rating-stars .filled-star {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffc107;
+        }
+
+        .rating-stars svg {
+            height: 100%;
+            width: 100%;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
 
 
     </style>
@@ -218,113 +244,119 @@
 <!-- fake header -->
 <header id="header" style="z-index: 100;
                 border-bottom: solid 1px #7D7068">
-    <div class="navbar navbar-expand-lg navbar-light pt-0 pb-0">
+    <div class="navbar navbar-expand-lg navbar-light pt-0 pb-0" style="border-bottom: solid 0.5px black">
         <div class="container-fluid pe-4 ps-4 justify-content-between "
              style="background-color: #ffffff; height: 120px">
+            <div class="d-flex justify-content-evenly" style="min-width: 540px">
+                <!-- insert web logo -->
+                <a class="d-flex " style="padding-left: 40px" href="./">
+                    <img src="img/logo1.png" alt="web-logo"
+                         style="min-width: 200px; max-height: 120px; object-fit: cover">
+                </a>
+                <!-- Category select -->
+                <div class="dropdown ms-4 d-flex justify-content-center align-items-center">
+                    <button class="dropdown-toggle button-dropdown-category" role="button" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-shapes me-2"></i>
+                        <span>Category</span>
+                    </button>
+                    <!-- on click display category list -->
+                    <ul class="dropdown-menu dropdown-menu-category" style="min-width: 130px" aria-labelledby="dropdownMenuButton1">
+                        <li>
 
-            <!-- insert web logo -->
-            <a class="pb-4 ps-2 " href="./"> <img src="img/logo1.png" alt="web-logo"
-                                                  style="max-width: 200px;margin-top: 15px">
-            </a>
+                            <a href="searchBookController?genres=Action" class="dropdown-item">Action </a>
+                        </li>
 
-            <div class="flex-grow-1" style="max-width: 800px">
-                <div class="d-flex justify-content-center">
+                        <li>
 
-                    <!-- Category select -->
-                    <div class="pe-4 dropdown">
-                        <button
-                            style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;
-                                    background: #f85b2b; color: white; border-radius: 18px; width: 200px; height: 40px;border: none "
-                            class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <img class="m-2 x" src="img/icon_dropdown_category.png"
-                                 style="width: 22px; height: 22px"/>
-                            <span class="m-2" style="font-size: 20px; font-weight: bold">Category</span>
-                        </button>
-                        <!-- on click display category list -->
-                        <ul class="dropdown-menu " style="min-width: 200px" aria-labelledby="dropdownMenuButton1">
-                            <li>
+                            <a href="searchBookController?genres=Adventure" class="dropdown-item">Adventure </a>
+                        </li>
 
-                                <a href="searchBookController?genres=Action" class="dropdown-item">Action </a>
-                            </li>
+                        <li>
 
-                            <li>
+                            <a href="searchBookController?genres=Comedy" class="dropdown-item">Comedy </a>
+                        </li>
 
-                                <a href="searchBookController?genres=Adventure" class="dropdown-item">Adventure </a>
-                            </li>
+                        <li>
 
-                            <li>
+                            <a href="searchBookController?genres=Fantasy+Fiction" class="dropdown-item">Fantasy
+                                Fiction </a>
+                        </li>
 
-                                <a href="searchBookController?genres=Comedy" class="dropdown-item">Comedy </a>
-                            </li>
+                        <li>
 
-                            <li>
+                            <a href="searchBookController?genres=Harem" class="dropdown-item">Harem </a>
+                        </li>
 
-                                <a href="searchBookController?genres=Fantasy+Fiction" class="dropdown-item">Fantasy
-                                    Fiction </a>
-                            </li>
+                        <li>
 
-                            <li>
+                            <a href="searchBookController?genres=Horror" class="dropdown-item">Horror </a>
+                        </li>
 
-                                <a href="searchBookController?genres=Harem" class="dropdown-item">Harem </a>
-                            </li>
+                        <li>
 
-                            <li>
+                            <a href="searchBookController?genres=Paranormal+fiction"
+                               class="dropdown-item">Paranormal fiction </a>
+                        </li>
 
-                                <a href="searchBookController?genres=Horror" class="dropdown-item">Horror </a>
-                            </li>
+                        <li>
 
-                            <li>
+                            <a href="searchBookController?genres=Romantic+comedy" class="dropdown-item">Romantic
+                                comedy </a>
+                        </li>
 
-                                <a href="searchBookController?genres=Paranormal+fiction"
-                                   class="dropdown-item">Paranormal fiction </a>
-                            </li>
+                        <li>
 
-                            <li>
+                            <a href="searchBookController?genres=School+life" class="dropdown-item">School life </a>
+                        </li>
 
-                                <a href="searchBookController?genres=Romantic+comedy" class="dropdown-item">Romantic
-                                    comedy </a>
-                            </li>
+                        <li>
 
-                            <li>
+                            <a href="searchBookController?genres=Science+fiction" class="dropdown-item">Science
+                                fiction </a>
+                        </li>
 
-                                <a href="searchBookController?genres=School+life" class="dropdown-item">School life </a>
-                            </li>
+                        <li>
 
-                            <li>
+                            <a href="searchBookController?genres=Slide+of+life" class="dropdown-item">Slide of life
+                            </a>
+                        </li>
 
-                                <a href="searchBookController?genres=Science+fiction" class="dropdown-item">Science
-                                    fiction </a>
-                            </li>
+                        <li>
 
-                            <li>
+                            <a href="searchBookController?genres=Supernatural" class="dropdown-item">Supernatural
+                            </a>
+                        </li>
 
-                                <a href="searchBookController?genres=Slide+of+life" class="dropdown-item">Slide of life
-                                </a>
-                            </li>
+                        <li>
 
-                            <li>
+                            <a href="searchBookController?genres=Thriller" class="dropdown-item">Thriller </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="d-flex ms-4 justify-content-center align-items-center">
 
-                                <a href="searchBookController?genres=Supernatural" class="dropdown-item">Supernatural
-                                </a>
-                            </li>
+                    <a class="btn-blog text-decoration-none" href="viewBlogListAction"><span>Blogs</span></a>
+                    <%--                        <a class="text-decoration-none" href="viewBlogListAction">--%>
+                    <%--                            <div class="d-flex align-items-center justify-content-center"--%>
+                    <%--                                 style="min-width: 35px;min-height: 40px; background-color: #f85b2b; border-bottom-right-radius: 18px;border-top-right-radius: 18px;">--%>
+                    <%--                                <i class="fa-solid fa-caret-right fa-sm"></i>--%>
+                    <%--                            </div>--%>
+                    <%--                        </a>--%>
 
-                            <li>
+                </div>
+            </div>
 
-                                <a href="searchBookController?genres=Thriller" class="dropdown-item">Thriller </a>
-                            </li>
-                        </ul>
-                    </div>
-
+            <div class="flex-grow-1" style="max-width: 500px">
+                <div>
                     <!-- Search form -->
-                    <div style="width: 550px">
+                    <div style="min-width: 400px">
                         <form action="searchBookController"
                               style="display: flex; border-radius: 18px; border: none; height:40px; background-color: #EAF6F6"
                               class="pe-4">
 
 
                             <input class="form-control "
-                                   style="flex-grow: 2;border-radius: 15px; border-color: transparent;background-color: #EAF6F6"
+                                   style="border-radius: 15px; border-color: transparent;background-color: #EAF6F6"
                                    type="search"
                                    placeholder="Search for manga that you like..." aria-label="Search"
                                    name="searchValue"
@@ -341,12 +373,10 @@
 
 
                 </div>
-
-
             </div>
             <!-- cart and user button -->
-            <div class="row justify-content-start p-2" style="min-width: 300px">
-                <div class="col " style="max-width: 60px">
+            <div class="row" style="padding-right: 5%">
+                <div class="col d-flex justify-content-center align-items-center">
 
                     <a href="viewCartPage">
 
@@ -355,62 +385,77 @@
                             <i class="fa-light fa-cart-shopping fa-xl"></i>
                             <span class="position-absolute translate-middle badge rounded-pill bg-danger"
                                   style="top: 42px ">
-                                        <c:set var="itemAmount" value="${sessionScope.CART.items.size()}"/>
-                                        <span id="cart-item-amount">${not empty itemAmount ? itemAmount : 0}</span>
-                                    </span>
+                                <c:set var="itemAmount" value="${sessionScope.CART.items.size()}"/>
+                                <span id="cart-item-amount">${not empty itemAmount ? itemAmount : 0}</span>
+                            </span>
                         </button>
 
 
                     </a>
 
                 </div>
-                <div class="col" style="max-width: 40px">
-                    <div class="d-flex justify-content-center" style="height: 20px;">
+                <div class="col d-flex justify-content-center align-items-center">
+                    <div class="d-flex justify-content-center ms-2" style="height: 20px;">
                         <div class="vr"></div>
                     </div>
                 </div>
 
                 <%--user--%>
 
-                <div class="col " style="max-width: 40px">
+                <div class="col d-flex justify-content-center align-items-center">
                     <c:set var="user" value="${sessionScope.USER}"/>
 
-                    <div class="user-icon">
-                        <i class="fa-light fa-user fa-xl"></i>
-                        <!-- on click display category list -->
+                    <%--                        <button class="btn" type="button" id="dropdownUserButton"  aria-haspopup="true" aria-expanded="false">--%>
+                    <%--                            <i class="fa-light fa-user fa-xl"></i>--%>
+                    <%--                        </button>--%>
 
-                        <c:if test="${empty user}">
+                    <!-- on click display category list -->
+
+                    <c:if test="${empty user}">
+                        <div class="user-icon dropdown ">
+                            <button class="btn" type="button" id="dropdownUserButton" aria-haspopup="true"
+                                    aria-expanded="false">
+                                <i class="fa-light fa-user fa-xl"></i>
+                            </button>
 
                             <!-- login button -->
-                            <div class="user-sub-icon">
-                                <a class="user-button login-btn" href="loginPage">Login</a>
+                            <div class="user-sub-icon dropdown-menu " aria-labelledby="dropdownUserButton">
+                                <a class="user-button dropdown-item login-btn" href="loginPage">Login</a>
                                 <!-- register button -->
-                                <a class="user-button" href="registrationPage">Register</a>
+                                <a class="user-button dropdown-item" href="registrationPage">Register</a>
                             </div>
-                        </c:if>
-                        <c:if test="${not empty user}">
-                            <span class="user-name">${user.fullName}</span>
+                        </div>
+                    </c:if>
+
+
+                    <c:if test="${not empty user}">
+                        <div class="user-icon-name dropdown ">
+                            <div style="min-height: 40px" class="d-flex align-items-center" type="button"
+                                 id="dropdownUserButton1" aria-haspopup="true"
+                                 aria-expanded="false">
+                                <i class="fa-light fa-user fa-xl me-2"></i>
+                                <span class="user-name align-self-end mb-1">${user.fullName}</span>
+                            </div>
                             <!-- User name welcome -->
-                            <div class="user-sub-icon">
+                            <div class="user-sub-icon dropdown-menu" aria-labelledby="dropdownUserButton1">
                                 <!-- list of action for user -->
-                                <a class="user-button" href="viewOrderHistory">Orders
+                                <a class="user-button  dropdown-item" href="viewOrderHistory">Orders
                                     history</a>
 
-                                <a class="user-button" href="userInformation">Update
-                                    Information</a>
+                                <a class="user-button  dropdown-item" href="userInformation">Update
+                                    Profile</a>
 
                                 <!-- logout button -->
-                                <a class="user-button login-btn" href="logoutAction">Logout</a>
+                                <a class="user-button login-btn dropdown-item" href="logoutAction">Logout</a>
 
                             </div>
-                        </c:if>
-                    </div>
+                        </div>
+                    </c:if>
+
                 </div>
 
 
             </div>
-
-
         </div>
 
     </div>
@@ -433,7 +478,7 @@
                         <div class="banner img-fluid ">
 
                             <div class="title">
-                                <h2>FIND YOU FAVORITE</h2>
+                                <h2>FIND YOUR FAVORITE</h2>
                                 <h1>MANGA</h1>
                             </div>
                             <h2 class="subtitle">
@@ -562,12 +607,19 @@
                                                     font-weight: bolder;
                                                     color: black;
                                                     text-decoration: none">
-                                                <span>${book.name}</span>
+                                                <span class="text-truncate d-inline-block" style="max-width: 200px" >${book.name}</span>
                                             </div>
                                             <div class="mt-2" style="color: #7D7068;
                                                      font-size: 10px">
                                                 <span>${book.authors.get(0).aliasName}</span>
                                             </div>
+                                        </div>
+                                        <div class="d-flex align-items-center" style="width: 50%;">
+                                            <div class="rating-stars d-inline-block position-relative mr-2">
+                                                <%@include file="img/grey-star.svg" %>
+                                                <div class="filled-star" style="width: ${book.rating.avg * 100 / 5}%"></div>
+                                            </div>
+                                            <div style="font-size: 14px;">(${book.rating.totalReview})</div>
                                         </div>
 
                                         <div class="mb-2">
@@ -668,12 +720,19 @@
                                                                 font-weight: bolder;
                                                                 color: black;
                                                                 text-decoration: none">
-                                                        <span>${book.name}</span>
+                                                        <span class="text-truncate d-inline-block" style="max-width: 200px">${book.name}</span>
                                                     </div>
                                                     <div class="mt-2" style="color: #7D7068;
                                                                  font-size: 10px">
                                                         <span>${book.authors.get(0).aliasName}</span>
                                                     </div>
+                                                </div>
+                                                <div class="d-flex align-items-center" style="width: 50%;">
+                                                    <div class="rating-stars d-inline-block position-relative mr-2">
+                                                        <%@include file="img/grey-star.svg" %>
+                                                        <div class="filled-star" style="width: ${book.rating.avg * 100 / 5}%"></div>
+                                                    </div>
+                                                    <div style="font-size: 14px;">(${book.rating.totalReview})</div>
                                                 </div>
 
                                                 <div class="mb-2">
@@ -806,12 +865,19 @@
                                                                 font-weight: bolder;
                                                                 color: black;
                                                                 text-decoration: none">
-                                                        <span>${book.name}</span>
+                                                        <span class="text-truncate d-inline-block" style="max-width: 200px">${book.name}</span>
                                                     </div>
                                                     <div class="mt-2" style="color: #7D7068;
                                                                  font-size: 10px">
                                                         <span>${book.authors.get(0).aliasName}</span>
                                                     </div>
+                                                </div>
+                                                <div class="d-flex align-items-center" style="width: 50%;">
+                                                    <div class="rating-stars d-inline-block position-relative mr-2">
+                                                        <%@include file="img/grey-star.svg" %>
+                                                        <div class="filled-star" style="width: ${book.rating.avg * 100 / 5}%"></div>
+                                                    </div>
+                                                    <div style="font-size: 14px;">(${book.rating.totalReview})</div>
                                                 </div>
 
                                                 <div class="mb-2">
@@ -941,12 +1007,19 @@
                                                     font-weight: bolder;
                                                     color: black;
                                                     text-decoration: none">
-                                                        <span>${book.name}</span>
+                                                        <span class="text-truncate d-inline-block" style="max-width: 200px">${book.name}</span>
                                                     </div>
                                                     <div class="mt-2" style="color: #7D7068;
                                                      font-size: 10px">
                                                         <span>${book.authors.get(0).aliasName}</span>
                                                     </div>
+                                                </div>
+                                                <div class="d-flex align-items-center" style="width: 50%;">
+                                                    <div class="rating-stars d-inline-block position-relative mr-2">
+                                                        <%@include file="img/grey-star.svg" %>
+                                                        <div class="filled-star" style="width: ${book.rating.avg * 100 / 5}%"></div>
+                                                    </div>
+                                                    <div style="font-size: 14px;">(${book.rating.totalReview})</div>
                                                 </div>
 
                                                 <div class="mb-2">
@@ -1073,12 +1146,19 @@
                                                     font-weight: bolder;
                                                     color: black;
                                                     text-decoration: none">
-                                                        <span>${book.name}</span>
+                                                        <span class="text-truncate d-inline-block" style="max-width: 200px">${book.name}</span>
                                                     </div>
                                                     <div class="mt-2" style="color: #7D7068;
                                                      font-size: 10px">
                                                         <span>${book.authors.get(0).aliasName}</span>
                                                     </div>
+                                                </div>
+                                                <div class="d-flex align-items-center" style="width: 50%;">
+                                                    <div class="rating-stars d-inline-block position-relative mr-2">
+                                                        <%@include file="img/grey-star.svg" %>
+                                                        <div class="filled-star" style="width: ${book.rating.avg * 100 / 5}%"></div>
+                                                    </div>
+                                                    <div style="font-size: 14px;">(${book.rating.totalReview})</div>
                                                 </div>
 
                                                 <div class="mb-2">
@@ -1204,12 +1284,19 @@
                                                         font-weight: bolder;
                                                         color: black;
                                                         text-decoration: none">
-                                                        <span>${book.name}</span>
+                                                        <span class="text-truncate d-inline-block" style="max-width: 200px">${book.name}</span>
                                                     </div>
                                                     <div class="mt-2" style="color: #7D7068;
                                                          font-size: 10px">
                                                         <span>${book.authors.get(0).aliasName}</span>
                                                     </div>
+                                                </div>
+                                                <div class="d-flex align-items-center" style="width: 50%;">
+                                                    <div class="rating-stars d-inline-block position-relative mr-2">
+                                                        <%@include file="img/grey-star.svg" %>
+                                                        <div class="filled-star" style="width: ${book.rating.avg * 100 / 5}%"></div>
+                                                    </div>
+                                                    <div style="font-size: 14px;">(${book.rating.totalReview})</div>
                                                 </div>
 
                                                 <div class="mb-2">
@@ -1335,12 +1422,19 @@
                                                         font-weight: bolder;
                                                         color: black;
                                                         text-decoration: none">
-                                            <span>${book.name}</span>
+                                            <span class="text-truncate d-inline-block" style="max-width: 200px">${book.name}</span>
                                         </div>
                                         <div class="mt-2" style="color: #7D7068;
                                                          font-size: 10px">
                                             <span>${book.authors.get(0).aliasName}</span>
                                         </div>
+                                    </div>
+                                    <div class="d-flex align-items-center" style="width: 50%;">
+                                        <div class="rating-stars d-inline-block position-relative mr-2">
+                                            <%@include file="img/grey-star.svg" %>
+                                            <div class="filled-star" style="width: ${book.rating.avg * 100 / 5}%"></div>
+                                        </div>
+                                        <div style="font-size: 14px;">(${book.rating.totalReview})</div>
                                     </div>
 
                                     <div class="mb-2">
@@ -1403,11 +1497,9 @@
     <!--romantic list end here-->
     <!--category carousel-->
     <div>
-
-
-        <div id="carouselCategory" class="carousel slide" data-bs-ride="carousel">
+        <div id="carouselCategory" class="carousel slide mt-5" data-bs-ride="carousel">
             <div class="carousel-inner">
-                <c:forEach begin="0" end="4" varStatus="counter">
+                <c:forEach begin="0" end="3" varStatus="counter">
                     <div class="carousel-item
                                  <c:if test="${counter.count==1}"> active</c:if>
                                  ">

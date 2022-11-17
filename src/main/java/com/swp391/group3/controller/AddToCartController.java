@@ -46,7 +46,7 @@ public class AddToCartController extends HttpServlet {
                 if (quantity <= 0) {
                     isError = true;
                     errors.setInvalidQuantityErr("Quantity must be greater than 0!");
-                } else if (quantity > holdingQuantity) {
+                } else if (quantity + cart.getBookQuantityByISBN(isbn) > holdingQuantity) {
                     isError = true;
                     errors.setExceedHoldingQuantityErr("Requested quantity exceeds holding quantity!");
                 } else {

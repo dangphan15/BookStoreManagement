@@ -129,4 +129,25 @@ public class InventoryDAO implements Serializable {
             }
         }
     }
+    
+    public void updateQuantityBook(Connection con, String ISBN, int quantity) throws Exception {
+        PreparedStatement stm = null;
+        try {
+            // make connection
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "update dbo.inventory set quantity=?\n"
+                        + "where ISBN=?";
+                stm = con.prepareStatement(sql);
+                //gan input params vao dau ?
+                stm.setInt(1, quantity);
+                stm.setString(2, ISBN);
+                stm.executeUpdate();
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+        }
+    }
 }

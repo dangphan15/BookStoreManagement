@@ -6,9 +6,12 @@
 package com.swp391.group3.controller;
 
 import com.swp391.group3.author.AuthorDAO;
+import com.swp391.group3.author.AuthorDTO;
 import com.swp391.group3.book.BookDAO;
 import com.swp391.group3.book.BookDTO;
 import com.swp391.group3.genre.GenreDAO;
+import com.swp391.group3.publisher.PublisherDAO;
+import com.swp391.group3.publisher.PublisherDTO;
 import com.swp391.group3.utils.AppConstants;
 import java.io.IOException;
 import java.sql.Date;
@@ -39,34 +42,77 @@ public class InventoryBookController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
         try {
             ServletContext context = request.getServletContext();
             Properties siteMap = (Properties) context.getAttribute("SITEMAPS");
+            String url = siteMap.getProperty(AppConstants.ManageBookFeatures.INVENTORY_BOOK_PAGE);
             BookDAO bookDAO = new BookDAO();
             AuthorDAO authorDAO = new AuthorDAO();
             GenreDAO genreDAO = new GenreDAO();
+            PublisherDAO publisherDAO = new PublisherDAO();
 
             String txtsearch = request.getParameter("txtsearch");
-
-            String url = siteMap.getProperty(AppConstants.ManageBookFeatures.INVENTORY_BOOK_PAGE);
+            String indexPage = request.getParameter("index");
+            if (indexPage == null) {
+                indexPage = "1";
+            }
+            int index = Integer.parseInt(indexPage);
+            int count = 0;
 
             List<BookDTO> bookList = new ArrayList<>();
-            if (txtsearch == null) {
-                bookList = bookDAO.getAllBook();
+            if (txtsearch == null || txtsearch.equals("")) {
+                bookList = bookDAO.getAllBookPaging(index);
+                count = bookDAO.getAllBook().size();
+                if (bookList != null) {
+                     for (BookDTO book : bookList) {
+                        book.setAuthors(authorDAO.getAuthorByBookISBN(book.getISBN()));
+                        book.setGenres(genreDAO.getGenreByBookISBN(book.getISBN()));
+                    }
+                }
             } else {
-                bookList = bookDAO.getBookByName(txtsearch);
+                bookList = bookDAO.getBookByNamePaging(txtsearch, index);
+                if (bookDAO.getBookByName(txtsearch) != null) {
+                    count = bookDAO.getBookByName(txtsearch).size();
+                    for (BookDTO book : bookList) {
+                        book.setAuthors(authorDAO.getAuthorByBookISBN(book.getISBN()));
+                        book.setGenres(genreDAO.getGenreByBookISBN(book.getISBN()));
+                    }
+                }
             }
-            for (BookDTO book : bookList) {
-                book.setAuthors(authorDAO.getAuthorByBookISBN(book.getISBN()));
-            }
-            
-            Date currentDate=new Date(System.currentTimeMillis());
+
+            Date currentDate = new Date(System.currentTimeMillis());
             Map<String, Boolean> genreList = genreDAO.getAllGenreToMap();
+
+            List<PublisherDTO> publisherList = new ArrayList<>();
+            publisherList = publisherDAO.getAllPublishers();
+
+            List<AuthorDTO> authorList = new ArrayList<>();
+            authorList = authorDAO.getAllAuthor();
+
+            List<String> languageList = new ArrayList<>();
+            languageList = bookDAO.getAllLanguage();
+
+            List<String> layoutList = new ArrayList<>();
+            layoutList = bookDAO.getAllLayout();
+
+            //Paging 
+            int endPage = count / 10;
+            if (count % 10 != 0) {
+                endPage++;
+            }
 
             request.setAttribute("bookList", bookList);
             request.setAttribute("genreList", genreList);
             request.setAttribute("currentDate", currentDate);
-            
+            request.setAttribute("publisherList", publisherList);
+            request.setAttribute("authorList", authorList);
+            request.setAttribute("languageList", languageList);
+            request.setAttribute("layoutList", layoutList);
+            request.setAttribute("endPage", endPage);
+            request.setAttribute("txtsearch", txtsearch);
+
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
 

@@ -9,6 +9,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,30 +24,42 @@ public class CreateBlogController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
 
         String url = AppConstants.ViewBookDetailFeature.VIEW_BOOK_DETAIL_CONTROLLER;
+        boolean isError = false;
         try {
-            String title = request.getParameter("title");
-            String content = request.getParameter("content");
-            String isbn = request.getParameter("ISBN");
-            HttpSession session = request.getSession(false);
-            if (session != null) {
-                UserDTO user = (UserDTO) session.getAttribute("USER");
-                if (user != null) {
-                    String author = user.getUsername();
-                    BlogDAO dao = new BlogDAO();
-                    if (title != null && content != null && isbn != null) {
-                        dao.createBlog(author, isbn, title, content);
+            String title = request.getParameter("title").trim();
+            String thumbnail = request.getParameter("thumbnail").trim();
+            String content = request.getParameter("content").trim();
+            if (title.isEmpty() || thumbnail.isEmpty() || content.isEmpty()) {
+                isError = true;
+                url = AppConstants.BlogFeatures.CREATE_BLOG_PAGE;
+                request.setAttribute("ERROR", "Blog title, thumbnail or content must not be empty!");
+            } else {
+                String isbn = request.getParameter("ISBN");
+                HttpSession session = request.getSession(false);
+                if (session != null) {
+                    UserDTO user = (UserDTO) session.getAttribute("USER");
+                    if (user != null) {
+                        String author = user.getUsername();
+                        BlogDAO dao = new BlogDAO();
+                        dao.createBlog(author, isbn, title, thumbnail, content);
                     }
                 }
+                url += ("?ISBN=" + isbn);
             }
-            url += ("?ISBN=" + isbn);
-
         } catch (ClassNotFoundException | SQLException | NamingException ex) {
             Logger.getLogger(CreateBlogController.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
+            if (isError) {
+                ServletContext context = request.getServletContext();
+                Properties siteMaps = (Properties) context.getAttribute("SITEMAPS");
+                String actualUrl = siteMaps.getProperty(url);
+                RequestDispatcher rd = request.getRequestDispatcher(actualUrl);
+                rd.forward(request, response);
+            }
             response.sendRedirect(url);
         }
     }

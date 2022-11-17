@@ -44,8 +44,12 @@ public class ManageStaffController extends HttpServlet {
         ServletContext context = request.getServletContext();
         Properties sitemap = (Properties) context.getAttribute("SITEMAPS");
         String url = sitemap.getProperty(AppConstants.ManageStaffFeatures.MANAGE_STAFF_PAGE);
+        //System.out.println(request.getAttribute("ERROR"));
         try  {
             List<UserDTO> users = dao.getUsersByRole(AppConstants.UserRoles.SALE_STAFF);
+            users.addAll(dao.getUsersByRole(AppConstants.UserRoles.INVENTORY_STAFF));
+            users.addAll(dao.getUsersByRole(AppConstants.UserRoles.CREATOR));
+            
             request.setAttribute("STAFFS", users);
             
         }

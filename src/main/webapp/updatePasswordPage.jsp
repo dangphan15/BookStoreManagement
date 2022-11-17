@@ -70,7 +70,7 @@
                     background: #FFFFFF;
                     border: solid #F65D4E 1px;
                 }
-                 .login-message {
+                .login-message {
                     color: red;
                     font-weight: bold;
                     margin-bottom: 5px;
@@ -90,30 +90,31 @@
     <c:set var="error" value="${requestScope.ERROR}" />
     <div class="register-form">
         <div class="register-title"></div>
-            
-            <form class="form" action="updatePasswordAction" method="POST">
-                <div class="register-title">Update password</div>
-                <label>Old password</label>
-                <input type="password" name="txtOldPassword" value="" 
-                       class="register-content" /><br>
-                <div class="login-message"> ${error.oldPasswordDoesNotMatch}</div>
-                <label>New password(* 6-30 characters)</label>
-                <input type="password" name="txtPassword" value="" 
-                       class="register-content" /><br>
-                <div class="login-message"> ${error.passwordLengthError}</div>
-                <label>Confirm password</label>
-                <input type="password" name="txtPasswordConfirm" value=""
-                       class="register-content" /><br>
-                
-                <div>
-                    <input type="submit" value="Update" class="register-button" />
-                </div>
-            </form>
-        
+
+        <form class="form" action="updatePasswordAction" method="POST">
+            <div class="register-title">Update password</div>
+            <label>Old password</label>
+            <input type="password" name="txtOldPassword" value="" 
+                   class="register-content" /><br>
+            <div class="login-message"> ${error.oldPasswordDoesNotMatch}</div>
+            <label>New password(* 6-30 characters)</label>
+            <input type="password" name="txtPassword" value="" 
+                   class="register-content" /><br>
+            <div class="login-message"> ${error.passwordLengthError}</div>
+            <label>Confirm password</label>
+            <input type="password" name="txtPasswordConfirm" value=""
+                   class="register-content" /><br>
+            <div class="login-message"> ${error.passwordConfirmNotMatch}</div>
+
+            <div>
+                <input type="submit" value="Update" class="register-button" />
+            </div>
+        </form>
+
     </div>
 
 
-    
+
 
     <%@include file="footer.html" %>
     <jsp:include page="include/include_footer.jsp"></jsp:include>

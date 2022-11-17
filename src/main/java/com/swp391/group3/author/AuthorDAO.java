@@ -209,8 +209,65 @@ public class AuthorDAO implements Serializable {
         return result;
     }
 
-    //INSERT AuthorAlias
+    // INSERT AuthorAlias
     // Insert table authors
+    public boolean checkAuthorByAlias(String bookAuthorAlias) throws SQLException, ClassNotFoundException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean result=false;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "select alias_name \n"
+                        + "from authors "
+                        + "where alias_name=?";
+                stm = con.prepareStatement(sql);
+                //gan input params vao dau ?
+                stm.setString(1, bookAuthorAlias);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    result = true;
+                }
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+            if(con!=null){
+                con.close();
+            }
+        }
+        return result;
+    }
+    
+    public void insertAuthor(String bookAuthorAlias, String bookAuthorName, int yearOfBirth, String web, String biography) throws SQLException, ClassNotFoundException, NamingException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "insert into authors(alias_name,name,year_of_birth,website,biography)\n"
+                        + "values (?,?,?,?,?)";
+                stm = con.prepareStatement(sql);
+                //gan input params vao dau ?
+                stm.setString(1, bookAuthorAlias);
+                stm.setString(2, bookAuthorName);
+                stm.setInt(3, yearOfBirth);
+                stm.setString(4, web);
+                stm.setString(5, biography);
+                stm.executeUpdate();
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+        }
+    }
+
     public void insertAuthor(Connection con, String bookAuthorAlias, String bookAuthorName, int yearOfBirth) throws SQLException, ClassNotFoundException, NamingException {
 
         PreparedStatement stm = null;
@@ -252,4 +309,24 @@ public class AuthorDAO implements Serializable {
         }
     }
 
+    public void updateBookAuthor(Connection con, String bookISBN, String bookAuthorAlias) throws SQLException, ClassNotFoundException, NamingException {
+        PreparedStatement stm = null;
+        try {
+            if (con != null) {
+                String sql = "update book_authors\n"
+                        + " set "
+                        + "author_alias=?\n"
+                        + "where ISBN=?";
+                stm = con.prepareStatement(sql);
+                //gan input params vao dau ?
+                stm.setString(1, bookAuthorAlias);
+                stm.setString(2, bookISBN);
+                stm.executeUpdate();
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+        }
+    }
 }

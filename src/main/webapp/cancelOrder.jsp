@@ -22,6 +22,9 @@
               background-attachment: fixed;">
 <%@include file="header.jsp" %>
 <div class="container mt-5 mb-5 pt-4 pb-5" style="background: white; max-width: 1000px!important; border-radius: 15px; margin-bottom: 270px !important; padding-right: 120px; padding-left: 120px">
+    <div class="row" style="font-size: 120%; margin-bottom: 30px">
+        <a href="viewOrderHistory?status=To%20Confirm" style="color:#f85b2b ">Back</a>
+    </div>
     <h2 style="text-align: center">
         Confirm before <span style="color: #f85b2b">canceling</span>
     </h2>

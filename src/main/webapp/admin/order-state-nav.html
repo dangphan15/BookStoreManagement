@@ -1,33 +1,220 @@
-<style>
-    .nav-container {
-        padding-top: 10px;
-        padding-bottom: 10px;
-        height: 100vh;
-        background-color: #334257;
-        
-    }
-    .nav-container a {
-        color: #EEEEEE;
-        /*text-decoration: underline;*/
-        font-size: 120%;
-        display: block;
-    }
-    .nav-container a:hover {
-        color: black;
-        background-color: white;
-        
-    }
-</style>
-<div class="col-md-2">
-    <nav class="nav flex-column nav-container">
-        <a class="nav-link" href="viewAllOrderAction">All</a>
-        <a class="nav-link" href="viewToConfirmOrderAction">To Confirm</a>
-        
-        <a class="nav-link" href="viewToShipOrderAction">To Ship</a>
-        <a class="nav-link" href="viewToReceiveOrderAction">To Receive</a>
-        <a class="nav-link" href="viewCompletedOrderAction">Completed</a>
-        <a class="nav-link" href="viewCancelledOrderAction">Cancelled</a>
-        <a class="nav-link" href="viewReturnAndRefundAction">Return/Refund</a>
-    </nav>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link href="https://cdn.staticaly.com/gh/hung1001/font-awesome-pro-v6/44659d9/css/all.min.css"
+          rel="stylesheet" type="text/css"/>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /*.nav-container {*/
+        /*    padding-top: 10px;*/
+        /*    padding-bottom: 10px;*/
+        /*    height: 100vh;*/
+        /*    background-color: #334257;*/
+
+        /*}*/
+        /*.nav-container a {*/
+        /*    color: #EEEEEE;*/
+        /*    !*text-decoration: underline;*!*/
+        /*    font-size: 120%;*/
+        /*    display: block;*/
+        /*}*/
+        /*.nav-container a:hover {*/
+        /*    color: black;*/
+        /*    background-color: white;*/
+
+        /*}*/
+        #sidebar-nav {
+            width: 280px;
+            background-color: transparent;
+
+        }
+
+        #sidebar {
+            /*background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 0%, rgba(246, 193, 213, 0.4) 100%);*/
+            /*linear-gradient(to bottom, #7F8C8D 0%, #000000 100%)*/
+            /*background-color: rgba(245, 245, 245, 0.2);*/
+            /*background-color: #fc8483;*/
+            background-color: rgba(243, 147, 147, 0.97);
+            height: 100%;
+        }
+
+        #sidebar-nav .list-group-item {
+
+            background: transparent;
+            color: #ffffff;
+            padding-left: 30px;
+            letter-spacing: 3px;
+            font-size: 1em;
+            min-height: 80px;
+
+        }
+
+
+        .d-flex {
+            /*justify-content: center;*/
+            align-items: center;
+        }
+
+        table {
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding-left: 40px !important;
+            padding-right: 20px !important;
+            padding-top: 15px !important;
+
+        }
+
+        th {
+            background-color: rgba(243, 147, 147, 0.97) !important;
+            color: #FFFFFF;
+        }
+
+        #example-table-admin {
+            margin-top: 10px;
+        }
+
+
+        .container-fluid {
+            /*background: linear-gradient(rgba(246, 247, 249, 0.5), rgba(241, 117, 151, 0.4)),*/
+            /*url(../img/background_admin.jpg) no-repeat center center fixed;*/
+            /*background-size: cover;*/
+            background: linear-gradient(rgba(246, 247, 249, 0.8), rgba(246, 247, 249, 0.8)),
+            url('../img/bg-clouds.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        #sidebar-nav a:hover, a:focus {
+            color: #ffffff;
+            font-weight: 800;
+            background-color: rgba(155, 142, 142, 0.3);
+        }
+
+        #dropdownMenuButton {
+            border-radius: 20px !important;
+        }
+
+        .dropdown-item:hover, .dropdown-item:focus {
+            font-weight: 800 !important;
+            background-color: rgba(243, 147, 147, 0.3) !important;
+        }
+
+        #sidebar-button i:hover, #sidebar-button i:focus {
+            background-color: transparent !important;
+            color: rgba(243, 147, 147, 0.97);
+        }
+
+
+        .pagination .active a {
+            background-color: #F39393F7 !important;
+            border-color: rgba(243, 147, 147, 0.97) !important;
+        }
+
+        .page-link {
+            color: black;
+        }
+
+        .page-item a:hover, .page-item a:focus {
+            background-color: rgba(243, 147, 147, 0.3) !important;
+            color: black;
+            border-color: transparent !important;
+        }
+
+        .btn-staff {
+            background-color: rgba(243, 147, 147, 0.97) !important;
+            color: #FFFFFF;
+        }
+
+        .btn-staff:hover, .btn-staff:focus {
+            background-color: #DE8888FF !important;
+            font-weight: bold;
+            color: #FFFFFF;
+        }
+
+
+    </style>
+</head>
+<body>
+<!--<div class="col-md-2">-->
+<!--    <nav class="nav flex-column nav-container">-->
+<!--        <a class="nav-link" href="viewAllOrderAction">All</a>-->
+<!--        <a class="nav-link" href="viewToConfirmOrderAction">To Confirm</a>-->
+<!--        <a class="nav-link" href="viewToShipOrderAction">To Ship</a>-->
+<!--        <a class="nav-link" href="viewToReceiveOrderAction">To Receive</a>-->
+<!--        <a class="nav-link" href="viewCompletedOrderAction">Completed</a>-->
+<!--        <a class="nav-link" href="viewCancelledOrderAction">Cancelled</a>-->
+<!--        <a class="nav-link" href="viewReturnAndRefundAction">Return/Refund</a>-->
+<!--    </nav>-->
+<!--</div>-->
+
+<div id="sidebar" class="collapse collapse-horizontal show border-end shown">
+    <div id="sidebar-nav" class="list-group list-group-item-action border-0 rounded-0 text-sm-start min-vh-100">
+
+        <a class="text-center" style="background-color: transparent !important;" href="./">
+            <img src="../img/logo1.png" alt="web-logo" style="width: 200px; height: 110px;object-fit: cover;">
+        </a>
+        <h4 style="color: black; font-weight: bolder; border-bottom: 1px solid rgba(241,117,151,0.4); "
+            class="p-3 text-start">
+            Manage blog
+        </h4>
+        <a class="list-group-item border-0 d-flex text-truncate" data-bs-parent="#sidebar" href="viewBlogsAction">
+            <i class="fa-solid fa-blog fa-2xl me-3"></i>
+            <span>Manage blog</span>
+        </a>
+        <h4 style="color: black; font-weight: bolder; border-bottom: 1px solid rgba(241,117,151,0.4)"
+            class="p-3 text-start">
+            Manage Order
+        </h4>
+
+        <a href="viewAllOrderAction" class="list-group-item border-0 d-flex text-truncate"
+           data-bs-parent="#sidebar">
+            <i class="fa-solid fa-ballot-check fa-2xl me-3"></i>
+            <span>All</span>
+        </a>
+        <a href="viewToConfirmOrderAction"
+           class="list-group-item border-0 d-flex text-truncate" data-bs-parent="#sidebar">
+            <i class="fa-regular fa-hourglass-clock fa-2xl me-3"></i>
+            <span>To Confirm</span>
+        </a>
+        <a href="viewToShipOrderAction" class="list-group-item border-0 d-flex text-truncate"
+           data-bs-parent="#sidebar">
+            <i class="fa-solid fa-truck-clock fa-2xl me-3"></i>
+            <span>To Ship</span>
+        </a>
+        <a href="viewToReceiveOrderAction"
+           class="list-group-item border-0 d-flex text-truncate" data-bs-parent="#sidebar">
+            <i class="fa-solid fa-inbox-in fa-2xl me-3"></i>
+            <span>To Receive</span>
+        </a>
+        <a href="viewCompletedOrderAction"
+           class="list-group-item border-0 d-flex text-truncate" data-bs-parent="#sidebar">
+            <i class="fa-duotone fa-box-check fa-2xl me-3"></i>
+            <span>Completed</span>
+        </a>
+        <a style="min-height: 80px;" href="viewCancelledOrderAction"
+           class="list-group-item border-0  d-flex text-truncate" data-bs-parent="#sidebar">
+            <i class="fa-solid fa-rectangle-xmark fa-2xl me-3"></i>
+            <span>Cancelled</span>
+        </a>
+        <a href="viewReturnAndRefundAction"
+           class="list-group-item border-0 d-flex text-truncate" data-bs-parent="#sidebar">
+            <i class="fa-solid fa-arrow-right-arrow-left fa-2xl me-3"></i>
+            <span>Return/Refund</span>
+        </a>
+
+
+    </div>
 </div>
+</body>
+</html>
+
+
 

@@ -116,6 +116,8 @@ public class ViewFinancialStatisticsController extends HttpServlet {
                 
               //  System.out.println(ss.toLocalDateTime());
 //                System.out.println(ee.toLocalDateTime());
+                ee = new Timestamp(fromDate.getTime());
+                ss = new Timestamp(toDate.getTime());
                 for (Timestamp t = ee; t.before(ss);t.setTime(t.getTime() + ((14 * 60) + 59) * 1000 * 30)) {
                     String s = dtf2.format(t.toLocalDateTime());
                     if (! totalPerDay.containsKey(s)) {

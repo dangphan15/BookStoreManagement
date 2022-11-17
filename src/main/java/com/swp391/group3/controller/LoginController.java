@@ -46,6 +46,7 @@ public class LoginController extends HttpServlet {
                 int roleId = dto.getRoleId();
                 switch (roleId) {
                     case AppConstants.UserRoles.CUSTOMER:
+                    case AppConstants.UserRoles.CREATOR:
                         url = AppConstants.LoginFeatures.START_APP_CONTROLLER;
                         break;
                     case AppConstants.UserRoles.ADMIN:
@@ -83,7 +84,8 @@ public class LoginController extends HttpServlet {
         } catch (NamingException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            if (request.getRequestURI().contains("/admin/") && dto != null && dto.getRoleId() == AppConstants.UserRoles.CUSTOMER) {
+            if (request.getRequestURI().contains("/admin/") && dto != null && 
+                    (dto.getRoleId() == AppConstants.UserRoles.CUSTOMER || dto.getRoleId() == AppConstants.UserRoles.CREATOR)) {
                 String error = "Username or password is incorrect";
                 request.setAttribute("ERROR", error);
                 url = AppConstants.LoginFeatures.LOGIN_PAGE;
@@ -93,7 +95,8 @@ public class LoginController extends HttpServlet {
                 String actualUrl = siteMaps.getProperty(url);
                 RequestDispatcher rd = request.getRequestDispatcher(actualUrl);
                 rd.forward(request, response);
-            } else if (!request.getRequestURI().contains("/admin/") && dto != null&& dto.getRoleId() != AppConstants.UserRoles.CUSTOMER) {
+            } else if (!request.getRequestURI().contains("/admin/") && dto != null &&
+                    (dto.getRoleId() != AppConstants.UserRoles.CUSTOMER && dto.getRoleId() != AppConstants.UserRoles.CREATOR)) {
                 String error = "Username or password is incorrect";
                 request.setAttribute("ERROR", error);
                 url = AppConstants.LoginFeatures.LOGIN_PAGE;

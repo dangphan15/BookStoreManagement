@@ -322,15 +322,22 @@
                      style="border-top: 1px solid rgba(217,217,217,0.87); margin-left: auto; margin-right: auto">
                     <div class="col">
                         <span><strong>Receiver name: </strong>${orderDto.receiverName}</span><br/>
-                        <span><strong>Address: </strong>${orderDto.address}</span>
-
+                        <span><strong>Address: </strong>${orderDto.address}</span><br>
+                        <c:if test="${not empty orderDto.deliveryCompany}">
+                            <span><strong>Delivery company: </strong>${orderDto.deliveryCompany}</span>
+                        </c:if>
 
                     </div>
                     <div class="col text-end">
                         <span><strong>Time: </strong><fmt:formatDate type="both"
                                         dateStyle="short" timeStyle="short"
                                         value="${orderDto.orderTime}"/></span><br/>
-                        <span><strong>Phone: </strong>${orderDto.phone}</span>
+                        <span><strong>Phone: </strong>${orderDto.phone}</span><br>
+                        <c:if test="${not empty orderDto.expectedDate}">
+                            <span><strong>Expected receive date: </strong>
+                                <fmt:formatDate value="${orderDto.expectedDate}" pattern="dd-MM-yyyy" />
+                            </span>
+                        </c:if>
                     </div>
                 </div>
             </div>

@@ -62,7 +62,7 @@ public class StartAppController extends HttpServlet {
                 actionAdventureList = actionAdventureList.subList(0, 18);
             }
             List<BookDTO> romanticList = bookDAO.getBookByCategory("Romantic comedy", 18);
-            System.out.println(trendingList.size());
+//            System.out.println(trendingList.size());
             addAuthor(bookList);
             addAuthor(highRatingList);
             addAuthor(saleOffList);

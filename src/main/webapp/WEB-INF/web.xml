@@ -156,6 +156,34 @@
         <servlet-name>ViewOrdersOfStaffController</servlet-name>
         <servlet-class>com.swp391.group3.controller.ViewOrdersOfStaffController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddPublisherController</servlet-name>
+        <servlet-class>com.swp391.group3.controller.AddPublisherController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddAuthorController</servlet-name>
+        <servlet-class>com.swp391.group3.controller.AddAuthorController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateStaffController</servlet-name>
+        <servlet-class>com.swp391.group3.controller.CreateStaffController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangStaffPassword</servlet-name>
+        <servlet-class>com.swp391.group3.controller.ChangStaffPassword</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeStaffRoleController</servlet-name>
+        <servlet-class>com.swp391.group3.controller.ChangeStaffRoleController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminDashboardController</servlet-name>
+        <servlet-class>com.swp391.group3.controller.AdminDashboardController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddGenreController</servlet-name>
+        <servlet-class>com.swp391.group3.controller.AddGenreController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>StartAppController</servlet-name>
         <url-pattern>/StartAppController</url-pattern>
@@ -275,6 +303,34 @@
     <servlet-mapping>
         <servlet-name>ViewOrdersOfStaffController</servlet-name>
         <url-pattern>/admin/ViewOrdersOfStaffController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddPublisherController</servlet-name>
+        <url-pattern>/AddPublisherController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddAuthorController</servlet-name>
+        <url-pattern>/AddAuthorController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateStaffController</servlet-name>
+        <url-pattern>/admin/CreateStaffController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangStaffPassword</servlet-name>
+        <url-pattern>/admin/ChangStaffPassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeStaffRoleController</servlet-name>
+        <url-pattern>/admin/ChangeStaffRoleController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminDashboardController</servlet-name>
+        <url-pattern>/admin/AdminDashboardController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddGenreController</servlet-name>
+        <url-pattern>/AddGenreController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

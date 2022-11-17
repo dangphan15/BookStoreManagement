@@ -82,6 +82,7 @@ public class CheckoutController extends HttpServlet {
                             Timestamp orderTime = new Timestamp(System.currentTimeMillis());
                             orderDto.setOrderTime(orderTime);
                             orderDto.setTotal(total);
+                            orderDto.setPayment(payment);
                             UserDTO user = (UserDTO) session.getAttribute("USER");
                             orderDto.setUsername(user.getUsername());
                             orderDto.setStatus(AppConstants.OrderStatus.TO_CONFIRM);

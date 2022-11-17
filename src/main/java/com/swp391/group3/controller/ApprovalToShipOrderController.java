@@ -24,7 +24,7 @@ public class ApprovalToShipOrderController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = AppConstants.ToShipOrderFeatures.VIEW_ORDER_DETAIL_CONTROLLER;
+        String url = AppConstants.ToShipOrderFeatures.VIEW_TO_SHIP_ORDERS_CONTROLLER;
         try {
             int orderId = Integer.parseInt(request.getParameter("id"));
             String deliveryCompany = request.getParameter("deliveryCompany");

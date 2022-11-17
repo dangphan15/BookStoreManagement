@@ -91,6 +91,39 @@ public class UserDAO {
         return result;
 
     }
+     public int updateUserRole(int role, String username) throws ClassNotFoundException, SQLException, NamingException {
+
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int result = 0;
+        try {
+            //1. make connection
+            connection = DBHelper.makeConnection();
+            //2. sql string
+            String sql = "UPDATE users SET [role_id] = ? WHERE username = ?";
+            //3. prepare statement
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, role);
+            stm.setString(2, username);
+            //4. execute
+            result = stm.executeUpdate();
+            //5. process result
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return result;
+
+    }
     public List<UserDTO> getUsersByRole (int roleId) throws SQLException, ClassNotFoundException, NamingException {
         Connection connection = null;
         PreparedStatement stm = null;
@@ -328,7 +361,7 @@ public class UserDAO {
     }
 
     public void insertNewUser(UserDTO dto, String password) throws SQLException, ClassNotFoundException, NamingException {
-        int DEFAULT_ROLE = AppConstants.UserRoles.CUSTOMER;
+        int DEFAULT_ROLE = dto.getRoleId();
         Connection connection = null;
         PreparedStatement stm = null;
         int result;

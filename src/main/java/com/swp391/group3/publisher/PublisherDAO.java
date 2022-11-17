@@ -58,13 +58,15 @@ public class PublisherDAO implements Serializable {
         }
     }
 
-    public String checkPublisherByName(Connection con, String publisherName)
+    public String checkPublisherByName(String publisherName)
             throws SQLException, ClassNotFoundException, NamingException {
 
+        Connection con=null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         String result = null;
         try {
+            con = DBHelper.makeConnection();
             if (con != null) {
                 // query string
                 String sql = "select p.name\n"

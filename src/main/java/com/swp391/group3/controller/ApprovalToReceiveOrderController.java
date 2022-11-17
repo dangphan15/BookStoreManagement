@@ -24,7 +24,7 @@ public class ApprovalToReceiveOrderController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = AppConstants.ToReceiveOrderFeatures.VIEW_ORDER_DETAIL_CONTROLLER;
+        String url = AppConstants.ToReceiveOrderFeatures.VIEW_TO_RECEIVE_ORDERS_CONTROLLER;
         try {
             int orderId = Integer.parseInt(request.getParameter("id"));
             HttpSession session = request.getSession(false);

@@ -1,29 +1,155 @@
 <style>
     footer {
-        background-color: #887D80;
+        background-color: rgba(197, 197, 197, 1);
         text-align: center;
         margin-bottom: 0;
-        padding-bottom: 5px;
-        padding-top: 30px;
-        color: white;
+        /*padding-bottom: 5px;*/
+        /*padding-top: 30px;*/
+        color: #000000;
         margin-top: 20px;
         z-index: 100;
     }
     footer a{
         text-decoration: none;
-        color: white;
-        font-size: 200%;
-        margin-left: 15px;
+        color: black;
+        font-size: 16px;
+        /*margin-left: 15px;*/
         margin-right: 15px;
     }
+    footer .col{
+        text-align: start;
+        justify-content: center;
+        padding: 30px;
+    }
+    footer ul{
+        padding-left: 0px;
+        margin: 0px;
+    }
+    .footer1{
+        margin-left: 20% ;
+        margin-right: 13% ;
+    }
+    .footer1 .col{
+        padding-right: 1%;
+        padding-left: 1%;
+
+    }
+    footer ul li {
+        margin-bottom: 10px;
+    }
+    footer ul li a{
+        font-size: 14px;
+    }
+    footer ul li a:hover, footer ul li a:focus{
+        color:#f85b2b ;
+    }
+    footer h4{
+        font-size: 20px;
+        margin-bottom: 10px;
+        font-weight: bolder;
+        color: #f85b2b;
+    }
+
+    .social-media{
+        font-size: 18px !important;
+    }
+    .social-media i{
+        margin-right: 6px;
+    }
+    .shipcod{
+        filter: invert(42%) sepia(79%) saturate(1785%) hue-rotate(343deg) brightness(98%) contrast(98%);
+        max-width: 60px;
+    }
+
+
 </style>
-<footer id="fter">
+<footer class="container-fluid" id="fter">
+
+    <div class="row footer1">
+        <div class="col">
+            <h4 style="max-width: fit-content; border-bottom: 1px solid grey; padding-bottom: 8px">About us</h4>
+            <ul style="list-style-type: none">
+                <li><a href="#">About Mangasa </a></li>
+                <li><a href="#">Recruit</a></li>
+                <li><a href="#">Mangasa Terms</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Genuine</a></li>
+                <li><a href="#">Contact Media</a></li>
+            </ul>
+        </div>
+        <div class="col me-lg-5">
+            <h4 style="max-width: fit-content; border-bottom: 1px solid grey; padding-bottom: 8px">Customer services</h4>
+            <ul style="list-style-type: none">
+                <li><a href="#">Help Centre</a></li>
+                <li><a href="#">Mangasa Blog</a></li>
+                <li><a href="#">Shipping</a></li>
+                <li><a href="#">Return & Refund</a></li>
+                <li><a href="#">Warranty Policy</a></li>
+
+            </ul>
+        </div>
+        <div class="col">
+            <h4 style="max-width: fit-content; border-bottom: 1px solid grey; padding-bottom: 8px">Social media</h4>
+            <ul style="list-style-type: none">
+                <li>
+                    <a class="social-media" href="https://www.facebook.com/giao.lang.bis" target="_blank">
+                        <i class="fa-brands fa-facebook"></i>
+                        <span>Facebook </span>
+
+
+                    </a>
+                </li>
+                <li>
+                    <a class="social-media"  href="https://www.youtube.com/c/gi%C3%A1ol%C3%A0ng" target="_blank">
+                        <i class="fa-brands fa-youtube"></i>
+                        <span>Youtube </span>
+
+                    </a>
+                </li>
+                <li>
+                    <a class="social-media" href="https://scontent.fsgn2-7.fna.fbcdn.net/v/t39.30808-6/270961679_10159870536636108_2642967668131478092_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=F4IXdR6WDtQAX80PmML&_nc_ht=scontent.fsgn2-7.fna&oh=00_AT-GlgxOdGI3-ZQRG0VkQ47I2ucEvEBN5kAIdVmpgz1bFQ&oe=6336F017" target="_blank">
+                        <i class="fa-brands fa-instagram"></i>
+                        <span>Instagram </span>
+
+                    </a>
+                </li>
+                <li>
+                    <a class="social-media" href="https://scontent.fsgn2-7.fna.fbcdn.net/v/t39.30808-6/270961679_10159870536636108_2642967668131478092_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=F4IXdR6WDtQAX80PmML&_nc_ht=scontent.fsgn2-7.fna&oh=00_AT-GlgxOdGI3-ZQRG0VkQ47I2ucEvEBN5kAIdVmpgz1bFQ&oe=6336F017" target="_blank">
+                        <i class="fa-brands fa-pinterest"></i>
+                        <span>Pinterest </span>
+
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+        <div class="col pe-0">
+            <h4 style="max-width: fit-content; border-bottom: 1px solid grey; padding-bottom: 8px">Payment</h4>
+            <ul style="list-style-type: none">
+                <li style="margin-bottom: 0 !important;">
+                    <a style="font-size: 50px !important; color: #005a95" href="#"><i class="fa-brands fa-cc-paypal "></i></a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img class="shipcod" src="https://cdn1.iconfinder.com/data/icons/marketplace-and-shipping/64/COD_cash_on_delivery_shipping_payment_delivery-1024.png">
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col ps-0">
+            <h4 style="max-width: fit-content; border-bottom: 1px solid grey; padding-bottom: 8px">Admin</h4>
+            <ul style="list-style-type: none">
+                <li><a href="/BookStoreManagement/admin/">Admin site</a></li>
+
+            </ul>
+        </div>
+    </div>
     <!-- write something here =) -->
-    <a href="https://www.facebook.com/giao.lang.bis" target="_blank"><i class="fa-brands fa-facebook"></i></a>
-    <a href="https://www.youtube.com/c/gi%C3%A1ol%C3%A0ng" target="_blank"><i class="fa-brands fa-youtube"></i></a>
-    <a href="https://scontent.fsgn2-7.fna.fbcdn.net/v/t39.30808-6/270961679_10159870536636108_2642967668131478092_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=F4IXdR6WDtQAX80PmML&_nc_ht=scontent.fsgn2-7.fna&oh=00_AT-GlgxOdGI3-ZQRG0VkQ47I2ucEvEBN5kAIdVmpgz1bFQ&oe=6336F017" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-    <a href="https://scontent.fsgn2-7.fna.fbcdn.net/v/t39.30808-6/270961679_10159870536636108_2642967668131478092_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=F4IXdR6WDtQAX80PmML&_nc_ht=scontent.fsgn2-7.fna&oh=00_AT-GlgxOdGI3-ZQRG0VkQ47I2ucEvEBN5kAIdVmpgz1bFQ&oe=6336F017" target="_blank"><i class="fa-brands fa-pinterest"></i></a>
-    <p>Powered by group 3</p>
+    <div class="row p-2" style="background-color:rgb(183,182,182); color:snow">
+        <p class="m-0 p-0 fw-bolder"><i class="fa-regular fa-copyright"></i> Powered by MANGASA</p>
+    </div>
+
 </footer>
 
     

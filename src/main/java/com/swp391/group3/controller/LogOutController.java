@@ -1,5 +1,6 @@
 package com.swp391.group3.controller;
 
+import com.swp391.group3.user.UserDTO;
 import com.swp391.group3.utils.AppConstants;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpSession;
  * @author QuanMX
  */
 public class LogOutController extends HttpServlet {
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -22,9 +23,16 @@ public class LogOutController extends HttpServlet {
         String url = AppConstants.LogOutFeatures.START_APP_CONTROLLER;
         try {
             if (session != null) {
+                if (session.getAttribute("USER") != null) {
+                    UserDTO user = (UserDTO) session.getAttribute("USER");
+                    int role = user.getRoleId();
+                    if (role != AppConstants.UserRoles.CUSTOMER && role != AppConstants.UserRoles.CREATOR) {
+                        url = AppConstants.LogOutFeatures.ADMIN_LOGIN_PAGE;
+                    }
+                }
                 session.invalidate();
             }
-            
+
         } finally {
             response.sendRedirect(url);
         }

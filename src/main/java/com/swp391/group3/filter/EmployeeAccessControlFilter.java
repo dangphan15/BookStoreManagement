@@ -126,6 +126,7 @@ public class EmployeeAccessControlFilter implements Filter {
                     int roleId = user.getRoleId();
                     switch (roleId) {
                         case AppConstants.UserRoles.CUSTOMER:
+                        case AppConstants.UserRoles.CREATOR:
                             url = AppConstants.LoginFeatures.START_APP_CONTROLLER;
                             break;
                         case AppConstants.UserRoles.ADMIN:
@@ -144,14 +145,14 @@ public class EmployeeAccessControlFilter implements Filter {
                 } else {
                     httpResponse.setStatus(404);
                 }
-            } else if (accessRole != null && accessRole.contains("1234")) {
+            } else if (accessRole != null && accessRole.contains("12346")) {
                 chain.doFilter(request, response);
             } else {
                 httpResponse.sendRedirect(AppConstants.LoginFeatures.LOGIN_PAGE);
             }
 
         } else {
-            if (accessRole != null && accessRole.contains("1234")) {
+            if (accessRole != null && accessRole.contains("12346")) {
                 chain.doFilter(request, response);
             } else {
                 httpResponse.sendRedirect(AppConstants.LoginFeatures.LOGIN_PAGE);

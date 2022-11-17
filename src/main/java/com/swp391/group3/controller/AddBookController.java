@@ -40,6 +40,8 @@ public class AddBookController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             ServletContext context = request.getServletContext();
             Properties siteMap = (Properties) context.getAttribute("SITEMAPS");
@@ -69,6 +71,9 @@ public class AddBookController extends HttpServlet {
             String bookDes = request.getParameter("bookDes");
             String bookQuantity = request.getParameter("bookQuantity");
 
+            if(bookTranslator.equals("")||bookTranslator==null){
+                bookTranslator="unknown";
+            }
             //Book Dto
             BookDTO book = new BookDTO(bookISBN, bookName, bookLanguage, bookDes, bookTranslator,
                     Float.parseFloat(bookPrice), Float.parseFloat(bookWeight), bookSize,
@@ -78,9 +83,11 @@ public class AddBookController extends HttpServlet {
 //            //insert Book
             boolean result = bookDAO.insertBook(book, genres, bookAuthorAlias, Integer.parseInt(bookQuantity));
             if ((result) == false) {
-                System.out.println("sai roi");
+                request.setAttribute("MESSEGE", "ISBN has been existed!!!");
+        
             } else {
-                System.out.println("ngon");
+                request.setAttribute("MESSEGE", "Add successfully!");
+               
 
             }
             RequestDispatcher rd = request.getRequestDispatcher(url);

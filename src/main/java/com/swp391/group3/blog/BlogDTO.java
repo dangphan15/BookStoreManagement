@@ -8,16 +8,26 @@ public class BlogDTO implements Serializable {
     private String title;
     private String content;
     private String ISBN;
+    private String bookName;
     private String author;
     private String authorFullname;
     private String staff;
     private Timestamp postedTime;
     private String status;
+    private String thumbnail;
 
     public BlogDTO() {
     }
 
-    public BlogDTO(int id, String title, String content, String ISBN, String author, 
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
+
+    public BlogDTO(int id, String title, String thumbnail, String content, String ISBN, String author, 
             String authorFullname, String staff, Timestamp postedTime, String status) {
         this.id = id;
         this.title = title;
@@ -28,6 +38,15 @@ public class BlogDTO implements Serializable {
         this.staff = staff;
         this.postedTime = postedTime;
         this.status = status;
+        this.thumbnail = thumbnail;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     public String getAuthorFullname() {

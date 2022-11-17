@@ -13,11 +13,11 @@
 
     <style>
         .register-form {
-            width: 40%;
+            width: 35%;
             margin: 0 auto;
             background: white;
             border-radius: 15px;
-            padding: 10px 12%;
+            padding: 10px 5%;
             margin-top: 30px;
 
         }
@@ -35,7 +35,7 @@
         }
 
         .form {
-            width: 330px;
+            max-width: 330px;
             margin-left: auto;
             margin-right: auto;
             margin-top: 20px;

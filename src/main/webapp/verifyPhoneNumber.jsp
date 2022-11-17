@@ -12,32 +12,37 @@
 
         </head>
 
-        <body>
+        <head>
             <style>
                 .register-form {
-                    width: 40%;
+                    width: 35%;
                     margin: 0 auto;
                     background: white;
                     border-radius: 15px;
-                    padding: 10px 12%;
+                    padding: 10px 5%;
                     margin-top: 30px;
+
                 }
 
                 .register-title {
-                    width: 200%;
+                    width: 100%;
                     text-align: center;
                     font-weight: bold;
                     font-size: 150%;
                     color: #000000;
                     text-transform: uppercase;
                     margin-top: 20px;
-                    margin-left: -115px;
+                    margin-right: auto;
+                    margin-left: auto;
                 }
+
                 .form {
-                    width: 330px;
-                    margin-left:  -40px;
+                    max-width: 330px;
+                    margin-left: auto;
+                    margin-right: auto;
                     margin-top: 20px;
                 }
+
                 .register-content {
                     width: 100%;
                     height: 35px;
@@ -68,27 +73,31 @@
                     background: #FFFFFF;
                     border: solid #F65D4E 1px;
                 }
-                 .login-message {
+
+                .login-message {
                     color: red;
                     font-weight: bold;
                     margin-bottom: 5px;
                 }
-
+                .register-form .form label{
+                    font-weight: bolder;
+                    margin-bottom: 5px;
+                }
             </style>
         </head>
 
-    <body style="background: linear-gradient(0deg, rgba(255, 244, 247, 0.6) 0%,
-          rgba(255, 244, 247, 0.6) 100%,
-          rgba(255, 244, 247, 0.6) 100%),
-          url('img/background_searchpage.jpg');
-          background-repeat: no-repeat;
-          background-size: cover;
-          background-attachment: fixed;">
-    <%@include file="header.jsp" %>
-    <c:set var="error" value="${requestScope.ERROR}" />
-    <div class="register-form">
-        <div class="register-title">We need more information</div>
-       
+        <body style="background: linear-gradient(0deg, rgba(255, 244, 247, 0.6) 0%,
+              rgba(255, 244, 247, 0.6) 100%,
+              rgba(255, 244, 247, 0.6) 100%),
+              url('img/background_searchpage.jpg');
+              background-repeat: no-repeat;
+              background-size: cover;
+              background-attachment: fixed;">
+        <%@include file="header.jsp" %>
+        <c:set var="error" value="${requestScope.ERROR}" />
+        <div class="register-form">
+            <div class="register-title">We need more information</div>
+
             <form class="form" action="verifyPhoneNumber" method="POST">
                 <label>Phone number(*)</label>
                 <input type="text" name="txtPhone" value="" 
@@ -111,6 +120,16 @@
                 <input type="hidden" name="txtEmail" value="${sessionScope.USER_POJO.email}" />
                 <div class="login-message"> ${error.emailPatternError}</div>
                 <div class="login-message"> ${error.emailHasbeenUsed}</div>
+                <div class="row mb-3 d-flex pt-3 pb-3" style="margin-right: 0; margin-left: 0; max-width: 330px; border: 1px solid gainsboro; border-radius: 5px">
+                    <div class="col-3 d-flex ps-0">
+                        <label> Gender </label>
+                    </div>
+                    <div class="col d-flex justify-content-around" >
+                        <input type="radio" name="txtGender" value="male" checked="checked" /> Male
+                        <input type="radio" name="txtGender" value="female" /> Female
+                        <input type="radio" name="txtGender" value="other"  /> Other
+                    </div>
+                </div>  
                 <label>Address</label>
                 <input type="text" name="txtAddress" value="" 
                        class="register-content" /><br>
@@ -118,15 +137,15 @@
                     <input type="submit" value="Continue" class="register-button" />
                 </div>
             </form>
-        
-    </div>
+
+        </div>
 
 
-    
 
-    <%@include file="footer.html" %>
-    <jsp:include page="include/include_footer.jsp"></jsp:include>
 
-</body>
+        <%@include file="footer.html" %>
+        <jsp:include page="include/include_footer.jsp"></jsp:include>
+
+    </body>
 
 </html>

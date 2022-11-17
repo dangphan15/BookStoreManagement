@@ -58,50 +58,9 @@ public class ViewOrdersOfStaffController extends HttpServlet {
             List<OrderDTO> orders = dao.getAllOrderByStaffISBN(username);
 
 //            System.out.println(orders);
-            int total = 0;
-//            System.out.println(total);
-            Timestamp ss = new Timestamp(0);
-            Timestamp ee = new Timestamp(System.currentTimeMillis());
-            Map<String, Integer> map = new TreeMap<>();
-            if (orders != null) {
-                for (OrderDTO dto : orders) {
-                    if (ss.compareTo(dto.getToConfirmDate()) < 0) {
-                        ss = dto.getToConfirmDate();
-                    }
-                    if (ee.compareTo(dto.getToConfirmDate()) > 0) {
-                        ee= dto.getToConfirmDate();
-                    }
-                    String time = new SimpleDateFormat("yyyy-MM").format(dto.getToConfirmDate());
-                    //System.out.println(time);
-                    ++total;
-                    if (map.get(time) == null) {
-                        map.put(time, 1);
-                    } else {
-                        map.put(time, map.get(time) + 1);
-                    }
-                }
-            }
             UserDTO user = uDao.getUserInforByUsername(username);
-              System.out.println(ss.toLocalDateTime());
-               System.out.println(ee.toLocalDateTime());
-             for (Timestamp t = ee; t.before(ss);t.setTime(t.getTime() + ((14 * 60) + 59) * 1000 * 30)) {
-                    String s = new SimpleDateFormat("yyyy-MM").format(t);
-                    System.out.println(s);
-                    if (! map.containsKey(s)) {
-                        map.put(s, 0);
-                    }
-                }
-            String label = "[";
-            String data = "[";
-            for (String s : map.keySet()) {
-                label = label + "'" + s + "',";
-                data = data + map.get(s) + ",";
-            }
-            label = label + "]";
-            data = data + "]";
-            request.setAttribute("LABEL", label);
-            request.setAttribute("DATA", data);
-            request.setAttribute("TOTAL", total);
+            //request.setAttribute("LABEL", label);
+            request.setAttribute("STAFFS", "hihi");
             request.setAttribute("USER", user);
 
         } catch (SQLException ex) {

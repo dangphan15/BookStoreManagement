@@ -13,7 +13,7 @@
         .img-product {
             height: 50px;
         }
-        .form-control{
+        .form-control,.form-select{
             border-radius: 12px !important;
         }
     </style>
@@ -53,7 +53,7 @@
                         <c:url var="viewBookDetail" value="viewBookDetailController">
                             <c:param name="ISBN" value="${book.ISBN}"></c:param>
                         </c:url>
-                        <tr id="${book.ISBN}">
+                        <tr id="${book.ISBN}" class="item-row">
                             <td>
                                     ${counter.count}.
                             </td>
@@ -173,7 +173,7 @@
                             <label class="col-4 col-form-label" style="font-weight:bold; font-size: 18px">Payment
                                 method*</label>
                             <div class="col-8">
-                                <select name="txtPayment" class="form-control">
+                                <select name="txtPayment" class="form-select">
                                     <option value="COD">Cash on delivery</option>
                                     <c:if test="${param.txtPayment eq 'Paypal'}">
                                         <option value="Paypal" selected="selected">Paypal</option>
@@ -297,11 +297,16 @@
                 ISBN: isbn
             },
             success: function (data) {
-                const totalPriceElem = document.getElementById("total-price").getElementsByTagName("span")[0];
-                let itemAmountElem = document.getElementById("cart-item-amount");
-                itemAmountElem.innerText = itemAmountElem.innerText - 1;
-                itemElem.remove();
-                totalPriceElem.innerText = numberWithDots(data) + " đ";
+                const itemRows = document.getElementsByClassName("item-row");
+                if (itemRows.length === 1) {
+                    document.location.href = "viewCartPage";
+                } else {
+                    const totalPriceElem = document.getElementById("total-price").getElementsByTagName("span")[0];
+                    let itemAmountElem = document.getElementById("cart-item-amount");
+                    itemAmountElem.innerText = itemAmountElem.innerText - 1;
+                    itemElem.remove();
+                    totalPriceElem.innerText = numberWithDots(data) + " đ";
+                }
             }
         });
     }

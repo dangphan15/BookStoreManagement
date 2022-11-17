@@ -91,6 +91,79 @@ public class OrderDAO implements Serializable {
         return orders;
     }
 
+    public List<OrderDTO> getAllOrders(int dateDiff) throws SQLException, ClassNotFoundException, NamingException {
+        Connection connection = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        List<OrderDTO> orders = null;
+
+        try {
+            //make connection
+            connection = DBHelper.makeConnection();
+            //sql query string
+            String sql = "SELECT order_id, receiver_name, [address], phone, order_time, total, username, staff_username, [status], status_note, payment, "
+                    + "to_confirm_date, to_ship_date, to_receive_date, expected_date, delivery_company, completed_date, cancelled_date, return_refund_date "
+                    + "FROM orders "
+                    + "WHERE DATEDIFF(day,[order_time],getdate()) <= ? "
+                    + "ORDER BY order_time DESC";
+            //prepare statement
+
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, dateDiff);
+            //execute
+            rs = stm.executeQuery();
+            //process result
+            while (rs.next()) {
+                int orderId = rs.getInt("order_id");
+                String receiverName = rs.getString("receiver_name");
+                String addresss = rs.getString("address");
+                String phone = rs.getString("phone");
+                Timestamp orderTime = rs.getTimestamp("order_time");
+                float total = rs.getFloat("total");
+                String username = rs.getString("username");
+                String staffUsername = rs.getString("staff_username");
+                String statusNote = rs.getString("status_note");
+                String payment = rs.getString("payment");
+                Timestamp toConfirmDate = rs.getTimestamp("to_confirm_date");
+                Timestamp toShipDate = rs.getTimestamp("to_ship_date");
+                Timestamp toReceiveDate = rs.getTimestamp("to_receive_date");
+                Timestamp expectedDate = rs.getTimestamp("expected_date");
+                String deliveryCompany = rs.getString("delivery_company");
+                Timestamp completedDate = rs.getTimestamp("completed_date");
+                Timestamp cancelledDate = rs.getTimestamp("cancelled_date");
+                Timestamp returnRefundDate = rs.getTimestamp("return_refund_date");
+                String status = rs.getString("status");
+                OrderDTO order = new OrderDTO(orderId, receiverName, addresss, phone, orderTime, total, username, staffUsername, status, statusNote, payment);
+                order.setToConfirmDate(toConfirmDate);
+                order.setToShipDate(toShipDate);
+                order.setToReceiveDate(toReceiveDate);
+                order.setDeliveryCompany(deliveryCompany);
+                order.setExpectedDate(expectedDate);
+                order.setCompletedDate(completedDate);
+                order.setCancelledDate(cancelledDate);
+                order.setReturnRefundDate(returnRefundDate);
+                if (orders
+                        == null) {
+                    orders = new ArrayList<>();
+                }
+
+                orders.add(order);
+            }
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return orders;
+    }
+
     public List<OrderDTO> getAllOrdersByStatus(String status) throws ClassNotFoundException, SQLException, NamingException {
         Connection connection = null;
         PreparedStatement stm = null;
@@ -103,7 +176,8 @@ public class OrderDAO implements Serializable {
             String sql = "SELECT order_id, receiver_name, [address], phone, order_time, total, username, staff_username, [status], status_note, payment, "
                     + "to_confirm_date, to_ship_date, to_receive_date, expected_date, delivery_company, completed_date, cancelled_date, return_refund_date "
                     + "FROM orders "
-                    + "WHERE [status] = ?";
+                    + "WHERE [status] = ? "
+                    + "ORDER BY order_time desc";
             //3. prepare statement
             stm = connection.prepareStatement(sql);
             stm.setString(1, status);
@@ -276,7 +350,7 @@ public class OrderDAO implements Serializable {
             //1. make connection
             connection = DBHelper.makeConnection();
             //2. sql string
-            String sql = "SELECT order_id, total,order_time, [status] FROM orders WHERE username = ?";
+            String sql = "SELECT order_id, total,order_time, [status] FROM orders WHERE username = ? order by order_time desc";
             //3. prepare statement
             stm = connection.prepareStatement(sql);
             stm.setString(1, username);
@@ -324,7 +398,7 @@ public class OrderDAO implements Serializable {
             //1. make connection
             connection = DBHelper.makeConnection();
             //2. sql string
-            String sql = "SELECT order_id, total, order_time, [status] FROM orders WHERE username = ? and [status] = ? ";
+            String sql = "SELECT order_id, total, order_time, [status] FROM orders WHERE username = ? and [status] = ? order by order_time desc";
             //3. prepare statement
             stm = connection.prepareStatement(sql);
             stm.setString(1, username);
@@ -618,6 +692,7 @@ public class OrderDAO implements Serializable {
 
         return result;
     }
+
     public List<OrderDTO> getAllOrderByStaffISBN(String sUsername) throws SQLException, ClassNotFoundException, NamingException {
         Connection connection = null;
         PreparedStatement stm = null;
@@ -634,12 +709,12 @@ public class OrderDAO implements Serializable {
                     + "WHERE staff_username = ? "
                     + "ORDER BY order_time DESC";
             //prepare statement
-            
+
             stm = connection.prepareStatement(sql);
             stm.setString(1, sUsername);
             //execute
             rs = stm.executeQuery();
-            
+
             //process result
             while (rs.next()) {
                 int orderId = rs.getInt("order_id");

@@ -142,6 +142,47 @@ public class GenreDAO implements Serializable {
         return result;
     }
 
+    public boolean getGenreByBookISBNAndName(Connection con, String ISBN, String genreName) throws ClassNotFoundException, SQLException, NamingException {
+        boolean result = false;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            // make connection
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                // query string
+                String sql = "select g.name, g.description "
+                        + "from book_genres bg inner join genres g on bg.name = g.name "
+                        + "where bg.ISBN = ? and bg.name=? ";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, ISBN);
+                stm.setString(2, genreName);
+                rs = stm.executeQuery();
+                // get data from result set end add to list
+                while (rs.next()) {
+                    String name = rs.getString("name");
+                    String description = rs.getString("description");
+                    GenreDTO dto = new GenreDTO(name, description);
+                    if (dto != null) {
+                        result = true;
+                    }
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+
+        }
+        return result;
+    }
+
     //INSERT Genre
     //insert table book_genres
     public void insertBookGenres(Connection con, String bookISBN, String genreName) throws SQLException, ClassNotFoundException, NamingException {
@@ -163,4 +204,83 @@ public class GenreDAO implements Serializable {
             }
         }
     }
+    
+    //DELETE GENRES
+    public void deleteBookGenresByISBN(Connection con, String bookISBN) throws SQLException, ClassNotFoundException, NamingException {
+        
+        PreparedStatement stm = null;
+        try {
+            if (con != null) {
+                String sql = "DELETE FROM book_genres WHERE ISBN=?;";
+                stm = con.prepareStatement(sql);
+                //gan input params vao dau ?
+                stm.setString(1, bookISBN);
+                int executeUpdate = stm.executeUpdate();
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+        }
+    }
+    
+    public String checkGenreByName(String genreName)
+            throws SQLException, ClassNotFoundException, NamingException {
+
+        Connection con=null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String result = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                // query string
+                String sql = "select *\n"
+                        + "from genres\n"                        
+                        + "where name=? ";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, genreName);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    result = rs.getString("name");
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+
+        }
+        return result;
+    }
+    
+    public void insertGenres(String genreName, String genreDes)
+            throws SQLException, ClassNotFoundException, NamingException {
+        int res = 0;
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            // make connection
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "insert into genres(name,description) values (?,?)";
+                stm = con.prepareStatement(sql);
+                // gan input params vao dau ?
+                stm.setString(1, genreName);
+                stm.setString(2, genreDes);
+                stm.executeUpdate();
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+
 }

@@ -32,6 +32,7 @@ import javax.naming.NamingException;
  * @author PC
  */
 public class BookDAO implements Serializable {
+
     // get all book from database
     public List<BookDTO> getAllBook() throws SQLException, ClassNotFoundException, NamingException {
         // list for storing book
@@ -559,7 +560,7 @@ public class BookDAO implements Serializable {
                         + "FROM books "
                         + "where name like ? ";
                 stm = con.prepareStatement(sql);
-                stm.setString(1, "%"+ bookName +"%");
+                stm.setString(1, "%" + bookName + "%");
 
                 rs = stm.executeQuery();
                 // get data from result set end add to list
@@ -605,7 +606,7 @@ public class BookDAO implements Serializable {
         }
         return result;
     }
-    
+
     public BookDTO getBookByISBN(Connection con, String bookISBN) throws SQLException, ClassNotFoundException, NamingException {
         if (bookISBN == null) {
             return null;
@@ -675,13 +676,10 @@ public class BookDAO implements Serializable {
                 AuthorDAO authorDAO = new AuthorDAO();
                 GenreDAO genreDAO = new GenreDAO();
                 PriceDAO priceDAO = new PriceDAO();
-                BookImportDAO bookImportDAO=new BookImportDAO();
+                BookImportDAO bookImportDAO = new BookImportDAO();
                 Date dateNow = new Date(System.currentTimeMillis());
                 if (bookDAO.getBookByISBN(connection, book.getISBN()) == null) {
                     inventoryDAO.insertQuantityBook(connection, book.getISBN(), bookQuantity);
-                    if (publisherDAO.checkPublisherByName(connection, book.getPublisherName()) == null) {
-                        publisherDAO.insertPublisherBook(connection, book.getPublisherName(), "unknown");
-                    }
 
                     //insert book_import
                     bookImportDAO.insertBookImport(connection, book.getISBN(), book.getPublisherName(), bookQuantity, dateNow, book.getPrice());
@@ -753,6 +751,308 @@ public class BookDAO implements Serializable {
             if (connection != null) {
                 connection.close();
             }
+        }
+        return result;
+    }
+
+    public boolean updateBook(BookDTO book, String[] genres, String bookAuthorAlias, int bookQuantity) throws SQLException, Exception {
+        boolean result = false;
+        Connection connection = null;
+        try {
+            // make connection
+            connection = DBHelper.makeConnection();
+            if (connection != null) {
+                connection.setAutoCommit(false);
+                BookDAO bookDAO = new BookDAO();
+                InventoryDAO inventoryDAO = new InventoryDAO();
+                PublisherDAO publisherDAO = new PublisherDAO();
+                AuthorDAO authorDAO = new AuthorDAO();
+                GenreDAO genreDAO = new GenreDAO();
+                PriceDAO priceDAO = new PriceDAO();
+                BookImportDAO bookImportDAO = new BookImportDAO();
+                Date dateNow = new Date(System.currentTimeMillis());
+                if (bookDAO.getBookByISBN(connection, book.getISBN()) != null) {
+                    inventoryDAO.updateQuantityBook(connection, book.getISBN(), bookQuantity);
+//
+//                    //insert book_import
+//                    bookImportDAO.insertBookImport(connection, book.getISBN(), book.getPublisherName(), bookQuantity, dateNow, book.getPrice());
+
+                    //update table books
+                    String sql = "update books\n"
+                            + "set \n"
+                            + "    name=?,\n"
+                            + "	language=?,\n"
+                            + "	description=?,\n"
+                            + "	translator=?,\n"
+                            + "	price=?,\n"
+                            + "	weight=?,\n"
+                            + "	size=?,\n"
+                            + "	year_of_publish=?,\n"
+                            + "	number_of_page=?,\n"
+                            + "	book_layout=?,\n"
+                            + "	publisher_name=?,\n"
+                            + "	image_url=?\n"
+                            + "where ISBN=?";
+                    PreparedStatement pst = connection.prepareStatement(sql);
+                    //gan input params vao dau ?
+                    pst.setString(1, book.getName());
+                    pst.setString(2, book.getLanguage());
+                    pst.setString(3, book.getDescription());
+                    pst.setString(4, book.getTranslator());
+                    pst.setFloat(5, book.getPrice());
+                    pst.setFloat(6, book.getWeight());
+                    pst.setString(7, book.getSize());
+                    pst.setInt(8, book.getYearOfPublishl());
+                    pst.setInt(9, book.getNumberOfPage());
+                    pst.setString(10, book.getBookLayout());
+                    pst.setString(11, book.getPublisherName());
+                    pst.setString(12, book.getImageAddress());
+                    pst.setString(13, book.getISBN());
+                    pst.executeUpdate();
+                    pst.close();
+
+                    //update table authors and book_authors
+                    int flag = -1;
+                    List<AuthorDTO> authorList = authorDAO.getAllAuthor();
+                    for (AuthorDTO author : authorList) {
+                        if (author.getAliasName().equals(bookAuthorAlias)) {
+                            flag = 1;
+                        }
+                    }
+
+                    if (flag == 1) {
+                        authorDAO.updateBookAuthor(connection, book.getISBN(), bookAuthorAlias);
+                    } else {
+                        authorDAO.insertAuthor(connection, bookAuthorAlias, "unknown", 0);
+                        authorDAO.updateBookAuthor(connection, book.getISBN(), bookAuthorAlias);
+                    }
+                    //insert table genres and book_genres
+
+                    genreDAO.deleteBookGenresByISBN(connection, book.getISBN());
+                    for (String genre : genres) {
+                        genreDAO.insertBookGenres(connection, book.getISBN(), genre);
+                    }
+
+//                    //insert table prices
+//                    priceDAO.insertPriceBook(connection, book.getISBN(), book.getPrice(), dateNow);
+                    //result
+                    result = true;
+                    connection.commit();
+                } else {
+                    result = false;
+                }
+            } else {
+            }
+
+        } catch (SQLException | ClassNotFoundException | NamingException ex) {
+            connection.rollback();
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return result;
+    }
+
+    public List<String> getAllLanguage() throws ClassNotFoundException, SQLException, NamingException {
+        List<String> result = null;
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            // make connection
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                // query string
+                String sql = "SELECT language "
+                        + "FROM books "
+                        + "GROUP BY language ";
+                stm = con.prepareStatement(sql);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String language = rs.getString("language");
+                    if (result == null) {
+                        result = new ArrayList<>();
+                    }
+                    result.add(language);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+
+        }
+        return result;
+    }
+
+    public List<String> getAllLayout() throws ClassNotFoundException, SQLException, NamingException {
+        List<String> result = null;
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            // make connection
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                // query string
+                String sql = "SELECT book_layout "
+                        + "FROM books "
+                        + "GROUP BY book_layout ";
+                stm = con.prepareStatement(sql);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String bookLayout = rs.getString("book_layout");
+                    if (result == null) {
+                        result = new ArrayList<>();
+                    }
+                    result.add(bookLayout);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+
+        }
+        return result;
+    }
+
+    public List<BookDTO> getAllBookPaging(int index) throws SQLException, ClassNotFoundException, NamingException {
+        // list for storing book
+        List<BookDTO> result = null;
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            // make connection
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                // query string
+                String sql = "SELECT * \n"
+                        + "FROM books\n"
+                        + "order by name\n"
+                        + "OFFSET ? ROWS FETCH NEXT 10 ROWS ONLY";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, (index - 1) * 10);
+                rs = stm.executeQuery();
+                // get data from result set end add to list
+                PriceDAO priceDAO = new PriceDAO();
+                RatingDAO ratingDAO = new RatingDAO();
+                while (rs.next()) {
+                    String ISBN = rs.getString("ISBN");
+                    String name = rs.getString("name");
+                    String language = rs.getString("language");
+                    String description = rs.getString("description");
+                    String translator = rs.getString("translator");
+                    float price = rs.getFloat("price");
+                    float currentPrice = priceDAO.getCurrentPriceOfBook(ISBN);
+                    int saleOffPercent = priceDAO.getSaleOffPercentOfBook(ISBN);
+                    float weight = rs.getFloat("weight");
+                    String size = rs.getString("size");
+                    int yearOfPublish = rs.getInt("year_of_publish");
+                    int numberOfPage = rs.getInt("number_of_page");
+                    String bookLayout = rs.getString("book_layout");
+                    String publisherName = rs.getString("publisher_name");
+                    String imageAddress = rs.getString("image_url");
+                    RatingDTO rating = ratingDAO.getRatingByISBN(ISBN);
+                    BookDTO dto = new BookDTO(ISBN, name, language, description, translator, price, currentPrice,
+                            saleOffPercent,
+                            weight, size, yearOfPublish, numberOfPage, bookLayout, publisherName, imageAddress, rating);
+                    if (result == null) {
+                        result = new ArrayList<>();
+                    }
+                    result.add(dto);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+
+        }
+        return result;
+    }
+
+    public List<BookDTO> getBookByNamePaging(String bookName, int index) throws SQLException, ClassNotFoundException, NamingException {
+
+        List<BookDTO> result = null;
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            // make connection
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                // query string
+                String sql = "SELECT * \n"
+                        + "FROM books\n"
+                        + "where name like ?\n"
+                        + "order by name\n"
+                        + "OFFSET ? ROWS FETCH NEXT 10 ROWS ONLY";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, "%" + bookName + "%");
+                stm.setInt(2, (index - 1) * 10);
+                rs = stm.executeQuery();
+                // get data from result set end add to list
+                PriceDAO priceDAO = new PriceDAO();
+                RatingDAO ratingDAO = new RatingDAO();
+                while (rs.next()) {
+                    String ISBN = rs.getString("ISBN");
+                    String name = rs.getString("name");
+                    String language = rs.getString("language");
+                    String description = rs.getString("description");
+                    String translator = rs.getString("translator");
+                    float price = rs.getFloat("price");
+                    float currentPrice = priceDAO.getCurrentPriceOfBook(ISBN);
+                    int saleOffPercent = priceDAO.getSaleOffPercentOfBook(ISBN);
+                    float weight = rs.getFloat("weight");
+                    String size = rs.getString("size");
+                    int yearOfPublish = rs.getInt("year_of_publish");
+                    int numberOfPage = rs.getInt("number_of_page");
+                    String bookLayout = rs.getString("book_layout");
+                    String publisherName = rs.getString("publisher_name");
+                    String imageAddress = rs.getString("image_url");
+                    RatingDTO rating = ratingDAO.getRatingByISBN(ISBN);
+                    BookDTO dto = new BookDTO(ISBN, name, language, description, translator, price, currentPrice, saleOffPercent,
+                            weight, size, yearOfPublish, numberOfPage, bookLayout, publisherName, imageAddress, rating);
+
+                    if (result == null) {
+                        result = new ArrayList<>();
+                    }
+                    result.add(dto);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+
         }
         return result;
     }
